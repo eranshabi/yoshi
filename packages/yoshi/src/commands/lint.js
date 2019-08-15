@@ -64,8 +64,8 @@ module.exports = runner.command(async () => {
     }
   } else if (isTypescriptProject()) {
     const tsFilesToLint =
-      shouldRunOnSpecificFiles && jsFiles.length
-        ? jsFiles
+      shouldRunOnSpecificFiles && (tsFiles.length || jsFiles.length)
+        ? [...tsFiles, ...jsFiles]
         : [...globs.baseDirs.map(dir => `${dir}/**/*.ts`), '*.ts'];
 
     try {
