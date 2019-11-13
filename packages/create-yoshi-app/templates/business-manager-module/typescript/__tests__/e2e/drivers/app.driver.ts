@@ -1,4 +1,4 @@
-const chance = require('chance');
+import chance from 'chance';
 
 export const appDriver = () => {
   const waitForVisibilityOf = async (selector: string) => {
@@ -7,14 +7,16 @@ export const appDriver = () => {
 
   return {
     navigateToApp: async () => {
-      const changeInstance = new chance.Chance();
-      const metaSiteId = changeInstance.guid();
+      const chanceInstance = new chance.Chance();
+      const metaSiteId = chanceInstance.guid();
       await page.goto(await testKitEnv.getUrl(`${metaSiteId}/{%projectName%}`));
     },
     getAppTitleText: async () => {
       await waitForVisibilityOf('h2');
-      return page.$eval('h2', e => e.innerText);
+      return page.$eval('h2', e => e.textContent);
     },
     waitForSelector: waitForVisibilityOf,
   };
 };
+
+export type AppDriver = ReturnType<typeof appDriver>;

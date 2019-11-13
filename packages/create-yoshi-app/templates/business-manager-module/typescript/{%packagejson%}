@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-      "start": "PORT=5000 yoshi start --entry-point ./dist/__tests__/dev/server.js --url http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/{%projectName%}",
+      "start": "PORT=5000 yoshi start --server ./dist/server.js --url http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/{%projectName%}",
       "pretest": "yoshi build",
       "test": "yoshi test",
       "posttest": "yoshi lint",
@@ -20,26 +20,26 @@
       }
     },
     "devDependencies": {
+      "@testing-library/react": "^9.3.0",
+      "@types/chance": "^1.0.6",
+      "@types/history": "^4.7.3",
       "@types/i18next": "^8.4.5",
       "@types/jest": "^24.0.0",
       "@types/node": "^8.0.0",
-      "@types/prop-types": "~15.5.0",
-      "@types/react": "~15.6.0",
-      "@types/react-dom": "~15.5.0",
+      "@types/react": "~16.8.0",
+      "@types/react-dom": "~16.8.0",
       "@types/react-i18next": "^7.8.2",
+      "@types/testing-library__react": "^9.1.2",
       "@wix/business-manager": "latest",
       "@wix/business-manager-api": "latest",
-      "enzyme": "^3.7.0",
-      "enzyme-adapter-react-16": "^1.5.0",
       "husky": "^1.3.1",
       "jest-yoshi-preset": "^4.1.0",
       "lint-staged": "^8.1.5",
-      "prop-types": "~15.5.0",
       "puppeteer": "^1.10.0",
-      "react": "^16.6.3",
-      "react-dom": "^16.6.3",
+      "react": "16.8.3",
+      "react-dom": "16.8.3",
       "react-module-container": "~1.0.0",
-      "typescript": "~3.0.1",
+      "typescript": "~3.6.0",
       "yoshi": "^4.1.0",
       "yoshi-style-dependencies": "^4.1.0"
     },
@@ -63,6 +63,7 @@
       "preset": "jest-yoshi-preset"
     },
     "yoshi": {
+      "projectType": "app",
       "entry": {
         "module": "./module"
       },

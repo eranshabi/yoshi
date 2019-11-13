@@ -35,6 +35,7 @@ describe('output', () => {
     const result = await global.scripts.build();
 
     expect(result.stdout).toMatch('Compiled successfully.');
+    expect(result.stdout).toMatch('Interested in reducing your bundle size?');
   });
 
   it('fails with babel syntax errors', async () => {
@@ -104,9 +105,7 @@ describe('output', () => {
     try {
       await global.scripts.build();
     } catch (error) {
-      expect(error.stderr).toMatch(
-        "(server) Entry module not found: Error: Can't resolve './server'",
-      );
+      expect(error.stderr).toMatch("We couldn't find your server entry");
     }
   });
 });

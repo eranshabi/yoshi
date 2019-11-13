@@ -64,6 +64,7 @@ export type InitialConfig = {
   experimentalMonorepo?: boolean;
   experimentalMinimalPRBuild?: boolean;
   experimentalRtlCss?: boolean;
+  yoshiServer: boolean;
   startUrl?: string | Array<string>;
   webWorker?: {
     entry?: WebpackEntry;
@@ -75,6 +76,7 @@ export type Config = {
   name?: string;
   unpkg: string | unknown;
   pkgJson: PackageJson;
+
   specs: SpecsConfig;
   hmr: boolean | 'auto';
   hooks: HooksConfig;
@@ -98,6 +100,7 @@ export type Config = {
   transpileTests: boolean;
   jestConfig: unknown;
   externalUnprocessedModules: Array<string>;
+  externalizeRelativeLodash: boolean;
   petriSpecsConfig: PetriOptions;
   performanceBudget: Options.Performance | false;
   resolveAlias: { [key: string]: string };
@@ -108,7 +111,7 @@ export type Config = {
   experimentalMonorepo: boolean;
   experimentalMinimalPRBuild: boolean;
   experimentalRtlCss: boolean;
-  experimentalMonorepoSubProcess: boolean;
+  yoshiServer: boolean;
   projectType: ProjectType | null;
   webWorkerEntry?: WebpackEntry;
   webWorkerExternals?: WebpackExternals;

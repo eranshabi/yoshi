@@ -37,6 +37,41 @@ declare module '*.html' {
   export default src;
 }
 
+declare module '*.mp3' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.woff' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.woff2' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.ttf' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.otf' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.eot' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.wav' {
+  const src: string;
+  export default src;
+}
+
 declare module '*.svg' {
   import * as React from 'react';
 
@@ -70,5 +105,10 @@ declare module '*.graphql' {
   import { DocumentNode } from 'graphql';
 
   const value: DocumentNode;
+  export = value;
+}
+
+declare module '*.inline.worker.ts' {
+  const value: any;
   export = value;
 }

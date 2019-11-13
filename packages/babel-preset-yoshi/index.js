@@ -41,7 +41,11 @@ module.exports = function(api, opts = {}) {
           // We don't need to be fully spec compatible, bundle size is more important.
           loose: true,
           // Allow users to provide its own targets and supply target node for test environment by default.
-          targets: options.targets || (isTest && 'current node'),
+          targets:
+            options.targets ||
+            (isDevelopment &&
+              'last 2 chrome versions, last 2 firefox versions') ||
+            (isTest && 'current node'),
         },
       ],
       !options.ignoreReact && [
@@ -79,8 +83,12 @@ module.exports = function(api, opts = {}) {
         },
       ],
       requireDefault('@babel/plugin-syntax-dynamic-import'),
+      // The `modules` variable can be `false` for ESmodules and `commonjs` for CommonJS
+      // modules: Webpack (server & client) & library ES build
+      // CommonJS: Tests & old flow (server & library)
+      //
       // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
-      !inWebpack && requireDefault('babel-plugin-dynamic-import-node'),
+      modules && requireDefault('babel-plugin-dynamic-import-node'),
       // Current Node and new browsers (in development environment) already implement it so
       // just add the syntax of Object { ...rest, ...spread }
       (isDevelopment || isTest) &&

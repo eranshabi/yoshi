@@ -1,6 +1,6 @@
 {
   "name": "create-yoshi-app",
-  "version": "4.11.1",
+  "version": "4.20.0",
   "description": "create yoshi powered apps",
   "keywords": [
     "create",
@@ -9,20 +9,18 @@
     "generate"
   ],
   "author": "Ran Yitzhaki & Ronen Amiel",
-  "main": "src/index.js",
-  "bin": {
-    "create-yoshi-app": "bin/create-yoshi-app.js"
-  },
+  "main": "build/index.js",
+  "bin": "build/bin/create-yoshi-app.js",
   "scripts": {
     "test": "jest",
-    "templates": "node scripts/runE2E.js",
+    "templates": "ts-node scripts/runE2E.js",
     "client": "npm run templates -- client client-typescript",
     "fullstack": "npm run templates -- fullstack fullstack-typescript",
     "server": "npm run templates -- server server-typescript",
     "library": "npm run templates -- library library-typescript",
     "bizmgr": "npm run templates -- business-manager-module business-manager-module-typescript",
     "ooi": "npm run templates -- out-of-iframe out-of-iframe-typescript",
-    "dev": "node scripts/dev.js"
+    "dev": "ts-node scripts/dev.js"
   },
   "jest": {
     "testPathIgnorePatterns": [
@@ -39,7 +37,7 @@
     "chalk": "^2.4.1",
     "commander": "^2.16.0",
     "constant-case": "^2.0.0",
-    "execa": "^1.0.0",
+    "execa": "^2.1.0",
     "fs-extra": "^7.0.0",
     "globby": "^9.0.0",
     "parse-git-config": "^2.0.2",
@@ -49,6 +47,11 @@
     "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^8.0.0",
+    "@types/parse-git-config": "^3.0.0",
+    "@types/prompts": "^2.0.2",
+    "@types/semver": "^6.0.2",
+    "@types/validate-npm-package-name": "^3.0.0",
     "chokidar": "^2.0.4",
     "clipboardy": "^1.2.3",
     "expect": "^23.6.0",
@@ -58,6 +61,8 @@
     "minimist": "^1.2.0",
     "mocha": "^5.2.0",
     "mocha-env-reporter": "^3.0.0",
-    "tempy": "^0.2.1"
+    "tempy": "^0.3.0",
+    "ts-node": "^8.4.1",
+    "type-fest": "^0.8.1"
   }
 }

@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const tempy = require('tempy');
 const execa = require('execa');
 const { authenticateToRegistry } = require('./publishMonorepo');
-const symlinkModules = require('./symlinkModules');
+const { symlinkModules } = require('./symlinkModules');
 
 const isCI = !!process.env.TEAMCITY_VERSION;
 
@@ -21,8 +21,9 @@ module.exports = async templateDirectory => {
     // Authenticate and install from our fake registry on CI
     authenticateToRegistry(testDirectory);
 
-    await execa.shell('npm install', {
+    await execa('npm install', {
       cwd: testDirectory,
+      shell: true,
       stdio: 'inherit',
       extendEnv: false,
       env: {
@@ -32,10 +33,12 @@ module.exports = async templateDirectory => {
   }
 
   // Copy mocked `node_modules`
-  await fs.copy(
-    path.join(templateDirectory, '__node_modules__'),
-    path.join(testDirectory, 'node_modules'),
-  );
+  if (await fs.pathExists(path.join(templateDirectory, '__node_modules__'))) {
+    await fs.copy(
+      path.join(templateDirectory, '__node_modules__'),
+      path.join(testDirectory, 'node_modules'),
+    );
+  }
 
   return {
     testDirectory,

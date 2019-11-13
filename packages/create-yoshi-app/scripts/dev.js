@@ -15,10 +15,15 @@ const clipboardy = require('clipboardy');
 const { replaceTemplates, getValuesMap } = require('../src/index');
 const { appCacheKey } = require('../src/constants');
 const cache = require('./cache')(appCacheKey);
-const TemplateModel = require('../src/TemplateModel');
-const createApp = require('../src/createApp');
+const TemplateModel = require('../src/TemplateModel').default;
+const createApp = require('../src/createApp').default;
 const { clearConsole } = require('../src/utils');
-const symlinkModules = require('../../../scripts/utils/symlinkModules');
+const {
+  symlinkModules,
+  getYoshiModulesList,
+} = require('../../../scripts/utils/symlinkModules');
+const installExternalDependencies = require('../src/installExternalDependnecies')
+  .default;
 
 function startWatcher(workingDir, templateModel) {
   const templatePath = templateModel.getPath();
@@ -117,7 +122,7 @@ async function askShouldContinueFromCache(cachedProjects) {
     return false;
   }
 
-  response.value.templateModel = TemplateModel.fromJSON(
+  response.value.templateModel = new TemplateModel(
     response.value.templateModel,
   );
 
@@ -171,6 +176,10 @@ async function init() {
       install: false,
       lint: false,
     });
+
+    const yoshiModulesList = getYoshiModulesList();
+
+    installExternalDependencies(workingDir, yoshiModulesList);
   }
 
   // symlink yoshi's packages

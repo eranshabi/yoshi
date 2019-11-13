@@ -58,6 +58,10 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
     externals: get(c => c.externals, []),
     transpileTests: get(c => c.transpileTests, true),
     externalUnprocessedModules: get(c => c.externalUnprocessedModules, []),
+    externalizeRelativeLodash: get(
+      c => c.features.externalizeRelativeLodash,
+      false,
+    ),
     petriSpecsConfig: get(c => c.petriSpecs, {}),
     performanceBudget: get(c => c.performance, false),
     resolveAlias: get(c => c.resolveAlias, {}),
@@ -68,6 +72,7 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
     experimentalMonorepo: get(c => c.experimentalMonorepo, false),
     experimentalMinimalPRBuild: get(c => c.experimentalBuildHtml, false),
     experimentalRtlCss: get(c => c.experimentalRtlCss, false),
+    yoshiServer: get(c => c.yoshiServer, false),
     projectType: get(c => c.projectType, null),
     webWorkerEntry: get(c => c.webWorker.entry, undefined),
     webWorkerExternals: get(c => c.webWorker.externals, undefined),
@@ -76,9 +81,6 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
 
     clientProjectName,
     clientFilesPath,
-
-    experimentalMonorepoSubProcess:
-      process.env.EXPERIMENTAL_MONOREPO_SUB_PROCESS === 'true',
 
     isAngularProject: !!dependencies.angular || !!peerDependencies.angular,
     isReactProject: !!dependencies.react || !!peerDependencies.react,

@@ -17,10 +17,9 @@
     "release": "yoshi release"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.3.0",
     "@wix/santa-site-renderer-testkit": "^1.59.0",
     "@wix/wix-http-testkit": "^1.0.997",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1",
     "husky": "~0.14.0",
     "isomorphic-fetch": "^2.2.1",
     "jest-yoshi-preset": "^4.6.3",
@@ -33,7 +32,7 @@
     "yoshi-style-dependencies": "^4.6.0"
   },
   "dependencies": {
-    "@wix/native-components-infra": "^1.0.0",
+    "@wix/native-components-infra": "^1.0.603",
     "@wix/wix-axios-config": "latest",
     "@wix/wix-base-ui": "^3.70.0",
     "@wix/wix-experiments": "^2.0.5",
@@ -45,6 +44,7 @@
     "react": "~16.6.2",
     "react-dom": "~16.6.2",
     "react-i18next": "^7.11.0",
+    "tpa-style-webpack-plugin": "^1.3.11",
     "wix-ui-tpa": "^1.0.123"
   },
   "lint-staged": {

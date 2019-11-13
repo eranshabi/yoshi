@@ -1,9 +1,10 @@
-import * as memoize from 'lodash/memoize';
 import * as i18next from 'i18next';
+
+const memoize = require('lodash/memoize');
 
 export const i18nInstance = i18next.createInstance();
 
-export default memoize(function i18n(locale: string) {
+export default memoize(function i18n(initialLanguage: string) {
   return i18nInstance
     .use({
       type: 'backend',
@@ -21,7 +22,7 @@ export default memoize(function i18n(locale: string) {
     })
     .init({
       // Initial language
-      lng: locale,
+      lng: initialLanguage,
 
       // Fallback language
       fallbackLng: 'en',

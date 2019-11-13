@@ -30,9 +30,9 @@ module.exports = class PuppeteerEnvironment extends ParentEnvironment {
 
     this.global.page = await this.global.browser.newPage();
 
-    this.global.page.setDefaultTimeout(5000);
+    this.global.page.setDefaultTimeout(10 * 1000);
 
-    this.global.page.setDefaultNavigationTimeout(5000);
+    this.global.page.setDefaultNavigationTimeout(10 * 1000);
 
     this.global.page.on('pageerror', error => {
       console.warn(`Puppeteer page error: ${error.message}`);
@@ -41,7 +41,10 @@ module.exports = class PuppeteerEnvironment extends ParentEnvironment {
   }
 
   async teardown() {
-    await this.global.page.close();
+    // There is an issue that the page is sometimes missing - https://github.com/wix/yoshi/issues/1642
+    if (this.global.page) {
+      await this.global.page.close();
+    }
     await super.teardown();
   }
 };

@@ -21,7 +21,7 @@
 
 1. **Viewer App**
 
-> Consists of 2 assets, the `viewerWidget` is the React component and the `viewerScript` is the "controller" part which runs in a web worker.
+> Consists of 2 assets, the `Widget` is the React component and the `viewerScript` is the "controller" part which runs in a web worker.
 
 2. **Editor App**
 3. **Settings Panel**
@@ -130,13 +130,13 @@ It's configured as follows:
 **Editor App (Widget URL)**
 
 ```
-https://localhost:3000/settingsPanel
+https://localhost:3000/editorApp
 ```
 
 **Settings Panel (App Settings URL)**
 
 ```
-https://localhost:3000/editorApp
+https://localhost:3000/settingsPanel
 ```
 
 > While you can create your own app, we think it is easier to just reuse the same app between sites.

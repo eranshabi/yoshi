@@ -46,7 +46,7 @@ describe('webpack', () => {
       await initTest('css-image-url');
 
       await matchCSS('css-image-url', page, [
-        /background-image:url\(media\/large-bart-simpson.gif\)/,
+        /background-image:url\(media\/large-bart-simpson\..{8}\.gif\)/,
       ]);
     });
   });
@@ -259,7 +259,18 @@ describe('webpack', () => {
         elm => elm.src,
       );
 
-      expect(imageSource).toMatch(/^.+media\/large-bart-simpson.gif$/);
+      expect(imageSource).toMatch(/^.+media\/large-bart-simpson\..{8}\.gif$/);
+    });
+
+    it('external image inclusion', async () => {
+      await initTest('large-external-image-inclusion');
+
+      const imageSource = await page.$eval(
+        '#large-external-image-inclusion',
+        elm => elm.src,
+      );
+
+      expect(imageSource).toMatch(/^.+media\/large-bart-simpson\..{8}\.gif$/);
     });
 
     it('inline svg inclusion', async () => {
@@ -311,6 +322,23 @@ describe('webpack', () => {
       );
 
       expect(result).toBe('This is an abstract.');
+    });
+  });
+
+  describe('web worker', () => {
+    it('web worker inclusion', async () => {
+      await initTest('web-worker-chunk-container');
+
+      await page.waitFor(
+        () => !!document.querySelector('#worker-text').textContent,
+      );
+
+      const result = await page.$eval(
+        '#worker-text',
+        ({ textContent }) => textContent,
+      );
+
+      expect(result).toBe('event from web worker');
     });
   });
 });

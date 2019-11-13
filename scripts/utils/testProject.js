@@ -22,6 +22,7 @@ module.exports = async ({
 
   const options = {
     stdio: 'inherit',
+    shell: true,
     env: {
       ...process.env,
       TEST_DIRECTORY: testDirectory,
@@ -55,7 +56,7 @@ module.exports = async ({
       const serveResult = await scripts.serve();
 
       try {
-        await execa.shell(
+        await execa(
           `npx jest --config='jest.production.config.js' --no-cache --runInBand`,
           options,
         );
@@ -89,7 +90,7 @@ module.exports = async ({
         console.log(chalk.blue(`> Running development integration tests`));
         console.log();
 
-        await execa.shell(
+        await execa(
           `npx jest --config='jest.development.config.js' --no-cache --runInBand`,
           options,
         );
@@ -103,26 +104,32 @@ module.exports = async ({
 
   async function runAdditionalTests() {
     // Run additional tests (errors, analyze)
-    try {
-      console.log();
-      console.log(chalk.blue(`> Running additional integration tests`));
-      console.log();
+    if (
+      await fs.pathExists(
+        path.resolve(templateDirectory, 'jest.plain.config.js'),
+      )
+    ) {
+      try {
+        console.log();
+        console.log(chalk.blue(`> Running additional integration tests`));
+        console.log();
 
-      await execa.shell(
-        `npx jest --config='jest.plain.config.js' --no-cache --runInBand`,
-        options,
-      );
-    } catch (error) {
-      failures.push(error);
+        await execa(
+          `npx jest --config='jest.plain.config.js' --no-cache --runInBand`,
+          options,
+        );
+      } catch (error) {
+        failures.push(error);
+      }
     }
-
-    // Clean eventually
-    await fs.remove(rootDirectory);
   }
 
   await testProductionBuild();
   await testLocalDevelopment();
   await runAdditionalTests();
+
+  // Clean eventually
+  await fs.remove(rootDirectory);
 
   // Fail testing this project if any errors happened
   if (failures.length > 0) {
