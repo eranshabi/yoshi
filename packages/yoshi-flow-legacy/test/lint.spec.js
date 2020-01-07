@@ -260,6 +260,19 @@ describe('Aggregator: Lint', () => {
       expect(res.stderr).to.contain('a.tsx');
       expect(res.stderr).to.contain('rootFile.tsx');
     });
+
+    it('eslint should work when having only .ts files', () => {
+      const res = setup({
+        'app/a.ts': `parseInt("1");`,
+        'not-in-glob/b.ts': 'parseInt("1");',
+        'package.json': fx.packageJson(),
+        'tsconfig.json': fx.tsconfig({ files: ['app/a.ts'] }),
+      }).execute('lint');
+      console.log(res.stdout);
+      expect(res.code).to.equal(1);
+      expect(res.stderr).to.contain('Missing radix parameter  radix');
+      expect(res.stderr).to.contain('a.ts');
+    });
   });
 
   describe.skip('stylelint', () => {
